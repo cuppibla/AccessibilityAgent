@@ -24,45 +24,42 @@ const IdentifyDominantColorsOutputSchema = z.object({
 });
 export type IdentifyDominantColorsOutput = z.infer<typeof IdentifyDominantColorsOutputSchema>;
 
-// TODO: Replacing identifyDominantColors
-
 export async function identifyDominantColors(input: IdentifyDominantColorsInput): Promise<IdentifyDominantColorsOutput> {
-  return;
-  // return identifyDominantColorsFlow(input);
+  return identifyDominantColorsFlow(input);
 }
 
-// const prompt = ai.definePrompt({
-//   name: 'identifyDominantColorsPrompt',
-//   input: {
-//     schema: z.object({
-//       photoDataUri: z
-//         .string()
-//         .describe(
-//           "A photo, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
-//         ),
-//     }),
-//   },
-//   output: {
-//     schema: z.object({
-//       dominantColors: z.array(z.string()).describe('A list of dominant colors in the image.'),
-//     }),
-//   },
-//   prompt: `You are an AI assistant that analyzes images and identifies the dominant colors.
+const prompt = ai.definePrompt({
+  name: 'identifyDominantColorsPrompt',
+  input: {
+    schema: z.object({
+      photoDataUri: z
+        .string()
+        .describe(
+          "A photo, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+        ),
+    }),
+  },
+  output: {
+    schema: z.object({
+      dominantColors: z.array(z.string()).describe('A list of dominant colors in the image.'),
+    }),
+  },
+  prompt: `You are an AI assistant that analyzes images and identifies the dominant colors.
 
-//   Analyze the image provided and identify the dominant colors present. Return a list of these colors.
+  Analyze the image provided and identify the dominant colors present. Return a list of these colors.
 
-//   Image: {{media url=photoDataUri}}
-//   `,
-// });
+  Image: {{media url=photoDataUri}}
+  `,
+});
 
-// const identifyDominantColorsFlow = ai.defineFlow<
-//   typeof IdentifyDominantColorsInputSchema,
-//   typeof IdentifyDominantColorsOutputSchema
-// >({
-//   name: 'identifyDominantColorsFlow',
-//   inputSchema: IdentifyDominantColorsInputSchema,
-//   outputSchema: IdentifyDominantColorsOutputSchema,
-// }, async input => {
-//   const {output} = await prompt(input);
-//   return output!;
-// });
+const identifyDominantColorsFlow = ai.defineFlow<
+  typeof IdentifyDominantColorsInputSchema,
+  typeof IdentifyDominantColorsOutputSchema
+>({
+  name: 'identifyDominantColorsFlow',
+  inputSchema: IdentifyDominantColorsInputSchema,
+  outputSchema: IdentifyDominantColorsOutputSchema,
+}, async input => {
+  const {output} = await prompt(input);
+  return output!;
+});

@@ -23,7 +23,7 @@ export type CheckTypoOutput = z.infer<typeof CheckTypoOutputSchema>;
 // TODO: Replacing checkTypo
 
 export async function checkTypo(input: CheckTypoInput): Promise<CheckTypoOutput> {
-  return;
+  return Promise.resolve({} as CheckTypoOutput);
   // return checkTypoFlow(input);
 }
 

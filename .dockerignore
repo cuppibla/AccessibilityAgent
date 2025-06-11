@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.git
+.gitignore
+.next/cache
+.env
+# Any other local development files/folders not needed in the image
